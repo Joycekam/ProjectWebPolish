@@ -11,6 +11,16 @@ const routes = {
   howWrite: "how_to_write/how_to_write.html"
 };
 
+const loadScript = (url) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Script load error for ${url}`));
+    document.body.appendChild(script);
+  });
+};
+
 const locationHandler = async () => {
   const location = window.location.hash.replace("#", "");
 
@@ -51,7 +61,7 @@ function initializeEditor() {
     nameWritingType.textContent = document.querySelector(".essayType").textContent;
   }
 
-  textArea.addEventListener('click', function (){
+  textArea.addEventListener('click', function () {
     if (textArea.textContent.length < 21) {
       textArea.textContent = "";
       textArea.removeAttribute("style");
@@ -117,7 +127,7 @@ function initializeEditor() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ sentences: [textContent] })
+      body: JSON.stringify({ sentences: [`<pl>${textContent}`] })
     });
 
     if (response.ok) {
@@ -132,10 +142,10 @@ function initializeEditor() {
   function displayCorrectedEssay(originalText, correctedText) {
     console.log("Corrected text:", correctedText);
     if (Array.isArray(correctedText) && correctedText.length > 0) {
-      const correctedTextString = correctedText.join(" ");
-      textArea.innerHTML = `<span style="background-color: yellow">${originalText}</span> <span style="color: red;">(${correctedTextString})</span>`;
+      const correctedTextString = correctedText[0];
+      textArea.innerHTML = `<span>${originalText}</span> <span style="color: red;">(${correctedTextString})</span>`;
     } else {
-      textArea.innerHTML = `<span style="background-color: yellow">${originalText}</span> <span style="color: red;">(No corrections needed or error in correction process)</span>`;
+      textArea.innerHTML = `<span>${originalText}</span> <span style="color: red;">(No corrections needed or error in correction process)</span>`;
     }
   }
 }

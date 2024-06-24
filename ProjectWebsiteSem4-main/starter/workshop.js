@@ -1,15 +1,13 @@
-function initializeEditor() {
+document.addEventListener("DOMContentLoaded", function () {
   const textArea = document.querySelector("#editor");
   const toolbar = document.querySelector(".toolbar");
   const colorPicker = document.querySelector("#colorPicker");
   const fontSizePicker = document.querySelector("#fontSizePicker");
   const nameWritingType = document.querySelector(".name-writing-type");
 
-  if (document.querySelector(".essayType")) {
-    nameWritingType.textContent = document.querySelector(".essayType").textContent;
-  }
+  nameWritingType.textContent = document.querySelector(".essayType");
 
-  textArea.addEventListener('click', function (){
+  textArea.addEventListener('click', function () {
     if (textArea.textContent.length < 21) {
       textArea.textContent = "";
       textArea.removeAttribute("style");
@@ -69,7 +67,7 @@ function initializeEditor() {
   }
 
   async function checkEssay(content) {
-    const textContent = content.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
+    const textContent = `<pl> ${content.replace(/<\/?[^>]+(>|$)/g, "")}`; // Add <pl> prefix and remove HTML tags
     const response = await fetch('http://localhost:8080/api/essays/correct', {
       method: 'POST',
       headers: {
@@ -91,9 +89,9 @@ function initializeEditor() {
     console.log("Corrected text:", correctedText);
     if (Array.isArray(correctedText) && correctedText.length > 0) {
       const correctedTextString = correctedText.join(" ");
-      textArea.innerHTML = `<span style="background-color: yellow">${originalText}</span> <span style="color: red;">(${correctedTextString})</span>`;
+      textArea.innerHTML = `${originalText} <span style="color: red;">(${correctedTextString})</span>`;
     } else {
-      textArea.innerHTML = `<span style="background-color: yellow">${originalText}</span> <span style="color: red;">(No corrections needed or error in correction process)</span>`;
+      textArea.innerHTML = `${originalText} <span style="color: red;">(No corrections needed or error in correction process)</span>`;
     }
   }
-}
+});
