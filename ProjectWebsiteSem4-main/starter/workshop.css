@@ -1,0 +1,60 @@
+/* Add your custom styles here */
+.header__title,
+.section{
+    display: none;
+}
+
+
+.toolbar {
+    margin-top: 2%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.format-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+.format-input {
+    margin: 0 5px;
+    padding: 3px;
+}
+
+.text-area {
+    border-left: 3px solid #5ec576;
+    border-right: 3px solid #5ec576;
+    border-top: 1px solid #5ec576;
+    border-bottom: 1px solid #5ec576;
+    min-height: 550px;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    font-size: 16px;
+}
+.name-writing-type{
+    margin-top: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+.save{
+    margin-left: 300px;
+    margin-right: 10px;
+    padding: 5px;
+}
+.check{
+    padding: 5px;
+
+}
+/* highlighting in correct words */
+.error {
+    background-color: yellow;
+    text-decoration: line-through;
+}
+/* Showing the corrections */
+.corrected {
+    background-color: lightgreen;
+}
